@@ -2,9 +2,9 @@
 
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
+  title: '우땅의 Starter Blog',
+  author: 'Changuk Woo',
+  headerTitle: 'Wukddang-Starter',
   description: 'A blog created with Next.js and Tailwind.css',
   language: 'en-us',
   theme: 'system', // system, dark or light
@@ -13,11 +13,9 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
+  email: 'dnr8874@gmail.com',
+  github: 'https://github.com/funkyblues',
   facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',
   locale: 'en-US',
   analytics: {
