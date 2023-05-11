@@ -4,14 +4,14 @@
 const siteMetadata = {
   title: '우땅의 Starter Blog',
   author: 'Changuk Woo',
-  headerTitle: 'Wukddang-Starter',
-  description: 'A blog created with Next.js and Tailwind.css',
+  headerTitle: 'Wukddang-Playground',
+  description: '공부 내용 저장소와 놀이터입니다.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
-  siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
+  siteLogo: '/static/images/logo.jpeg',
+  image: '/static/images/me.png',
   socialBanner: '/static/images/twitter-card.png',
   email: 'dnr8874@gmail.com',
   github: 'https://github.com/funkyblues',

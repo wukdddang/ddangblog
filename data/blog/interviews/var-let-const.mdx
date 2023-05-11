@@ -1,0 +1,68 @@
+---
+title: 'var, const, let의 차이점은 무엇인가요?'
+date: 2023-05-10T15:32:14Z
+lastmod: '2023-05-10'
+tags: ['JavaScript', 'Interview']
+draft: false
+summary: '면접 들어가기 전 빠르게 정리하는 var, const, let의 차이점! 이번 기회에 정리하고 넘어가봅시다.'
+images: ['/static/images/me.jpg']
+authors: ['wukddang']
+layout: PostLayout
+---
+
+안녕하세요! 여기서는 JavaScript에서 변수에 사용하는 키워드인 var, const, let의 차이점에 대해 알아보겠습니다.
+
+<div className="w-52">
+  ![blackout](/static/images/blackout.jpeg)
+</div>
+
+<br /> 혹시나 면접 전에 머리가 하얘져서 기억이 안난다! 아래 TOC를 적절히 이용합시다.
+
+<TOCInline toc={props.toc} toHeading={2} />
+
+## 알잘딱하고 간단하게 1분내로 설명해주세요
+
+JavaScrtipt에는 3가지 변수 선언 키워드가 있습니다. 그것이 `var`, `const`, `let`입니다.
+
+### var
+
+`ES6(2015)` 이전에는 오직 var 키워드만으로 변수 선언을 할 수 있었습니다.
+
+1. var 키워드의 유효범위는 `함수 범위`입니다. 따라서 블록 스코프 내에 정의를 했더라도, 블록 스코프 범위 바깥에서 호출이 가능합니다.
+2. var 키워드는 `재할당`이 가능합니다.
+3. 변수 호이스팅이 `함수 스코프`로 발생합니다.
+4. var 키워드는, 런타임 이전에 암묵적으로 선언과 동시에 할당이 됩니다. 따라서 어떠한 값을 할당하지 않아도 `undefined` 값을 가집니다.
+
+> Var variables are created when their containing Lexical Environment is instantiated and are initialized to undefined when created.[^1]
+
+위의 내용과 코드를 묶어서 암기합시다. (면접 때 같이 말할 수 있으면 더 좋음 ㅋ)
+```js
+console.log(score); // undefined
+// 1. 선언과 동시에 암묵적으로 할당이 되었습니다. 따라서 undefined
+// 2. var 키워드는 함수 스코프로 동작합니다. 따라서 전역 범위로 호이스팅이 됩니다.
+
+var score; // 변수 선언문
+var score = 10; 
+// 3. var 키워드는 재할당이 가능합니다.
+{
+  for (var i = 0; i < 10; i++) {
+    console.log(i);
+  }
+}
+console.log(i); // 10
+// 4. 블록 스코프의 for문 안에서 선언한 var 키워드는, 블록 스코프 밖에서도 호출이 가능합니다.
+```
+
+[^1]: https://262.ecma-international.org/11.0/#sec-variable-statement
+
+---
+
+`ES6`에서 등장한 let, const는 모두 블록 스코프에서만 선언이 가능합니다. 함수 스코프로 동작하던 `var` 키워드의 예측하지 못한 동작을 방지할 수 있어서, Modern JavaScript에서는 `let`, `const`를 사용하는 것이 권장됩니다.
+
+### let
+
+---
+
+### const
+
+## 좀 더 자세하게 설명해주세요

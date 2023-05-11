@@ -23,7 +23,7 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+        <div className="pt-6 pb-8 space-y-2 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
@@ -62,7 +62,7 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
                             ))}
                           </div>
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                        <div className="prose text-gray-500 max-w-none dark:text-gray-400">
                           {summary}
                         </div>
                       </div>
@@ -72,7 +72,7 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read "${title}"`}
                         >
-                          Read more &rarr;
+                          더 보러 가기 &rarr;
                         </Link>
                       </div>
                     </div>
