@@ -12,11 +12,11 @@ layout: PostLayout
 
 안녕하세요! 여기서는 JavaScript에서 변수에 사용하는 키워드인 var, const, let의 차이점에 대해 알아보겠습니다.
 
-<div className="w-52">
-  ![blackout](/static/images/blackout.jpeg)
-</div>
+[모던 자바스크립트 Deep Dive](http://www.yes24.com/Product/Goods/92742567) 책을 참고하고 쓴 것임을 미리 알려드립니다!
 
-<br /> 혹시나 면접 전에 머리가 하얘져서 기억이 안난다! 아래 TOC를 적절히 이용합시다.
+<div className="w-52">![blackout](/static/images/blackout.jpeg)</div>
+
+<br /> 혹시나 면접 전에 머리가 하얘져서 기억이 안난다면? 아래 글을 빠르게 습득합시다! 고고
 
 <TOCInline toc={props.toc} toHeading={2} />
 
@@ -29,27 +29,28 @@ JavaScrtipt에는 3가지 변수 선언 키워드가 있습니다. 그것이 `va
 `ES6(2015)` 이전에는 오직 var 키워드만으로 변수 선언을 할 수 있었습니다.
 
 1. var 키워드의 유효범위는 `함수 범위`입니다. 따라서 블록 스코프 내에 정의를 했더라도, 블록 스코프 범위 바깥에서 호출이 가능합니다.
-2. var 키워드는 `재할당`이 가능합니다.
+2. var 키워드는 `중복 선언`이 가능합니다.
 3. 변수 호이스팅이 `함수 스코프`로 발생합니다.
 4. var 키워드는, 런타임 이전에 암묵적으로 선언과 동시에 할당이 됩니다. 따라서 어떠한 값을 할당하지 않아도 `undefined` 값을 가집니다.
 
 > Var variables are created when their containing Lexical Environment is instantiated and are initialized to undefined when created.[^1]
 
 위의 내용과 코드를 묶어서 암기합시다. (면접 때 같이 말할 수 있으면 더 좋음 ㅋ)
+
 ```js
-console.log(score); // undefined
+console.log(score) // undefined
 // 1. 선언과 동시에 암묵적으로 할당이 되었습니다. 따라서 undefined
 // 2. var 키워드는 함수 스코프로 동작합니다. 따라서 전역 범위로 호이스팅이 됩니다.
 
-var score; // 변수 선언문
-var score = 10; 
-// 3. var 키워드는 재할당이 가능합니다.
+var score // 변수 선언문
+var score = 10
+// 3. var 키워드는 중복 선언이 가능합니다.
 {
   for (var i = 0; i < 10; i++) {
-    console.log(i);
+    console.log(i)
   }
 }
-console.log(i); // 10
+console.log(i) // 10
 // 4. 블록 스코프의 for문 안에서 선언한 var 키워드는, 블록 스코프 밖에서도 호출이 가능합니다.
 ```
 
@@ -57,12 +58,75 @@ console.log(i); // 10
 
 ---
 
-`ES6`에서 등장한 let, const는 모두 블록 스코프에서만 선언이 가능합니다. 함수 스코프로 동작하던 `var` 키워드의 예측하지 못한 동작을 방지할 수 있어서, Modern JavaScript에서는 `let`, `const`를 사용하는 것이 권장됩니다.
+`ES6`에서 등장한 `let`, `const`의 유효 범위는 모두 블록 스코프입니다. 함수 스코프로 동작하던 `var` 키워드의 예측하지 못한 동작을 방지할 수 있어서, Modern JavaScript에서는 `let`, `const`를 사용하는 것이 권장됩니다.
+
+let과 const도 변수 호이스팅이 발생합니다. 다만 그 범위가 블록 스코프에서 발생할 뿐입니다.
 
 ### let
+
+let 키워드로 선언하는 변수는 다음과 같은 특징을 가집니다.
+
+1. 변수의 `중복 선언`이 불가능합니다.
+2. let 키워드의 유효 스코프는 블록 스코프입니다.
+3. 블록 스코프 내에서 변수 호이스팅이 발생합니다.
+4. 변수의 선언과 초기화가 분리되어 진행됩니다`(TDZ)`
+
+코드도 같이 외워두면 좋겠군요.
+
+```js
+let score = 10 // 전역 변수
+
+{
+  console.log(math) // ReferenceError: Cannot access 'math' before initialization
+  // 참조 에러 발생
+  // 1. 변수는 JavaScript 엔진에 의해 암묵적으로 선언 단계가 먼저 실행되고,
+  // 초기화 단계는 변수 선언문에 도달했을 때 실행 됩니다.
+
+  let math = 30 // 블록 스코프에 선언된 지역 변수
+  let eng = 60 // 블록 스코프에 선언된 지역 변수
+}
+
+let score = 100 // SyntaxError: Identifier 'score' has already been declared
+// 문법 에러
+// 2. let 키워드는 중복 선언이 불가능합니다.
+console.log(score) // 10
+console.log(math) // ReferenceError: math is not defined
+// 참조 에러 발생
+// 3. let 키워드는 블록 스코프 내에서만 동작합니다.
+```
 
 ---
 
 ### const
 
-## 좀 더 자세하게 설명해주세요
+1. 변수의 `재할당`이 불가능합니다.
+2. 블록 스코프 내에서 변수 호이스팅이 발생합니다.
+3. 선언과 동시에 초기화해야 합니다.
+4. const 키워드로 선언한 변수에 할당된 객체 내부의 값은 변경할 수 있습니다.
+
+```js
+const good = 10
+
+{
+  console.log(hello) // ReferenceError: Cannot access 'hello' before initialization
+  // 참조 에러
+  // 1. const는 선언과 초기화가 분리되어 동작합니다.
+  // 2. const는 스코프 범위에서 호이스팅이 발생합니다.
+  const hello = 'hi'
+  console.log(hello) // hi
+}
+
+const yes // SyntaxError: Missing Initializer in const declaration
+// 문법 에러
+// 3. const는 선언과 동시에 초기화해 주어야 합니다.
+
+const arr = [1, 2, 3, 4, 5]
+arr[0] = 100
+console.log(arr) // [100, 2, 3, 4, 5]
+// 4. const 키워드로 선언한 변수 객체의 내부 값은 변경할 수 있습니다.
+
+```
+
+이번 글에서는 var, let, const 키워드에 대해 알아봤습니다. JavaScript의 변수의 동작원리도 보면 재미있는게 많은데, 이번 글의 주제와는 벗어나니까 다음 글에서 작성하도록 하겠습니다. 감사합니다~!
+
+
