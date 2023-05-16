@@ -15,8 +15,8 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: 'dnr8874@gmail.com',
   github: 'https://github.com/funkyblues',
-  facebook: 'https://facebook.com',
-  linkedin: 'https://www.linkedin.com',
+  facebook: '',
+  linkedin: '',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
