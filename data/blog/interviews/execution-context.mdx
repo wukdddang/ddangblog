@@ -12,16 +12,30 @@ layout: PostLayout
 
 안녕하세요! 여기서는 JavaScript의 실행 컨텍스트에 대해 완벽하게 이해하고 넘어가도록 합시다!
 
-<div className="w-64">![comprehension](/static/images/complete-comprehension.jpeg)</div>
-본문 내용은 아래 책들을 참고하여 작성하였음을 미리 알려드립니다!{' '}
+<div className="w-96">![comprehension](/static/images/complete-comprehension.jpeg)</div>
+본문 내용은 아래 책들과 [ECMAScript 공식문서](https://tc39.es/ecma262/#running-execution-context)를 참고하여
+작성하였음을 미리 알려드립니다!{' '}
 
 - [모던 자바스크립트 Deep Dive](http://www.yes24.com/Product/Goods/92742567) {' '}
 - [코어 자바스크립트](http://www.yes24.com/Product/Goods/78586788){' '}
+- [기초부터 완성까지, 프런트엔드](http://www.yes24.com/Product/Goods/105266398)
+
+## Environment Records
+
+`환경 레코드`라고도 하는 `Environment Records`는 현재 실행 컨텍스트와 관련된 코드의 식별자 정보들이 저장됩니다. 아직 실행 컨텍스트가 무엇인지 잘 모르시는 분들은, 아래 글을 보고 다시 이 내용을 이해하시면 좋을 것 같습니다. JavaScript 엔진은 코드가 실행되기 이전에 모든 식별자들을 저장하기 때문에 현재 실행중인 컨텍스트에 속한 코드의 변수명들을 모두 알게 되는 셈이 되는 것입니다. 이 과정에서 호이스팅(hoisting)이라는 개념이 등장합니다.
 
 ## 실행 컨텍스트 (execution context)
 
-실행 컨텍스트는 `소스코드를 실행하는 데 필요한 환경 정보들을 모아놓은 객체이며, 코드의 실행 결과를 실제로 관리하는 객체`라고 할 수 있습니다. JavaScript는 어떤 실행 컨텍스트가 활성화되는 시점에 선언된 변수를 위로 끌어올리고(호이스팅),
-외부 환경 정보{' '}(outerEnvironmentReference)를 구성하고, this값을 설정하는 등의 동작을 수행합니다. 함수를 실행하거나, 블록 `{}`을 생성하면 새로운 실행 컨텍스트가 구성됩니다.
+ECMAScript 공식문서에 따르면 실행 컨텍스트의 정의는 다음과 같습니다.
+
+> An execution context is a specification device that is used to track the runtime evaluation of code by an ECMAScript implementation.
+
+쉽게 정의해 보자면, 실행 컨텍스트란 `소스코드를 실행하는 데 필요한 환경 정보들을 모아놓은 객체이며, 코드의 실행 결과를 실제로 관리하는 객체`라고 할 수 있습니다. JavaScript는 어떤 실행 컨텍스트가 활성화되는 시점에 선언된 변수를 위로 끌어올리고(호이스팅),
+외부 환경 정보{' '}를 구성하고, this값을 설정하는 등의 동작을 수행합니다. 함수를 실행하거나, 블록 `{}`을 생성하면 새로운 실행 컨텍스트가 구성됩니다. 이 실행 컨텍스트는 `LexicalEnvironment`, `VariableEnvironment`, `PrivateEnvironment` 세 가지 컴포넌트로 구성되어 있습니다.
+
+`PrivateEnvironment`는 클래스와 관련된 Environment로, 이 글에서는 다루지 않도록 하겠습니다. 가능하다면 다른 글에서 다루도록 하겠습니다.
+
+> - 정보: ES5의 실행 컨텍스트는 thisBinding에 대한 정보를 별도로 저장하였지만, ES6 이후부터는 EnvironmentRecord에서 this에 대한 정보를 저장합니다.
 
 JavaScript의 코드는 `콜 스택(call stack`)위에서 동작합니다. 함수를 실행하거나, 블록을 생성하여 구성된 실행 컨텍스트는 바로 이 콜 스택 위에 쌓이게 됩니다. 스택이란 자료구조의 특성에 따라, 스택의 최상단에는 제일 마지막으로 실행된 코드의 실행 컨텍스트가 존재하게 되는 것입니다.
 
@@ -43,4 +57,6 @@ hello()
 console.log(hi)
 ```
 
-<div className="w-64">![emptyContext](/static/images/empty-context.png)</div>
+<div className="mx-auto w-64">![emptyContext](/static/images/empty-context.png)</div>
+
+JavaScript 코드가 실행되기 전에는, 우리가 사용하려는 콜 스택은 비어있게 됩니다. JavaScript 코드를 실행하는 순간, 전역 실행 컨텍스트가 콜 스택에 담기게 됩니다.
