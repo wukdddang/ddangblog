@@ -22,7 +22,15 @@ layout: PostLayout
 
 ## Environment Records
 
-`환경 레코드`라고도 하는 `Environment Records`는 현재 실행 컨텍스트와 관련된 코드의 식별자 정보들이 저장됩니다. 아직 실행 컨텍스트가 무엇인지 잘 모르시는 분들은, 아래 글을 보고 다시 이 내용을 이해하시면 좋을 것 같습니다. JavaScript 엔진은 코드가 실행되기 이전에 모든 식별자들을 저장하기 때문에 현재 실행중인 컨텍스트에 속한 코드의 변수명들을 모두 알게 되는 셈이 되는 것입니다. 이 과정에서 호이스팅(hoisting)이라는 개념이 등장합니다.
+`환경 레코드`라고도 하는 `Environment Records`는 현재 실행 컨텍스트와 관련된 코드의 식별자 정보들이 저장됩니다. (아직 실행 컨텍스트가 무엇인지 잘 모르시는 분들은, 아래 글을 보고 다시 이 내용을 이해하시면 좋을 것 같습니다.) JavaScript 엔진은 코드가 실행되기 이전에 모든 식별자들을 저장하기 때문에 현재 실행중인 컨텍스트에 속한 코드의 변수명들을 모두 알게 되는 셈이 되는 것입니다. 이 과정에서 호이스팅(hoisting)이라는 개념이 등장합니다.
+
+일반적으로 Environment Records는
+
+1. `함수 선언문 (function definition)`
+2. `블록 스코프 (block scope)`
+3. `try, catch 문`
+
+과 같은 JavaScript 코드의 특정 구문 구조와 연결됩니다. 이러한 코드를 평가할 때마다 해당 코드로 생성된 식별자 바인딩을 기록하는 새로운 Environment Records 가 만들어집니다. 즉, 위의 JavaScript 코드 구문이 실행될 때 새로운 실행 컨텍스트가 생성되는 것입니다.
 
 ## 실행 컨텍스트 (execution context)
 
@@ -35,11 +43,9 @@ ECMAScript 공식문서에 따르면 실행 컨텍스트의 정의는 다음과 
 
 `PrivateEnvironment`는 클래스와 관련된 Environment로, 이 글에서는 다루지 않도록 하겠습니다. 가능하다면 다른 글에서 다루도록 하겠습니다.
 
-> - 정보: ES5의 실행 컨텍스트는 thisBinding에 대한 정보를 별도로 저장하였지만, ES6 이후부터는 EnvironmentRecord에서 this에 대한 정보를 저장합니다.
+> - 정보: ES5의 실행 컨텍스트는 thisBinding에 대한 정보를 별도로 저장하였지만, ES6 이후부터는 Environment Records에서 this에 대한 정보를 저장합니다.
 
 JavaScript의 코드는 `콜 스택(call stack`)위에서 동작합니다. 함수를 실행하거나, 블록을 생성하여 구성된 실행 컨텍스트는 바로 이 콜 스택 위에 쌓이게 됩니다. 스택이란 자료구조의 특성에 따라, 스택의 최상단에는 제일 마지막으로 실행된 코드의 실행 컨텍스트가 존재하게 되는 것입니다.
-
-맨 처음 JavaScript 코드를 실행하게 되면 `전역 실행 컨텍스트`가 콜 스택에 쌓이게 됩니다. 전역 실행 컨텍스트는 브라우저나 Node.js 환경에서 자동적으로 실행되므로 JavaScript 파일이 실행되는 순간 전역 실행 컨텍스트가 활성화 된다고 보시면 됩니다.
 
 예시 코드와 그림을 보면서 이해해 봅시다.
 
@@ -57,6 +63,6 @@ hello()
 console.log(hi)
 ```
 
-<div className="mx-auto w-64">![emptyContext](/static/images/empty-context.png)</div>
+JavaScript 코드가 실행되기 전, `전역 실행 컨텍스트`가 콜 스택에 쌓이게 됩니다. 전역 실행 컨텍스트는 브라우저나 Node.js 환경에서 자동적으로 실행되므로 JavaScript 파일이 실행되는 순간 전역 실행 컨텍스트가 활성화 된다고 보시면 됩니다.
 
-JavaScript 코드가 실행되기 전에는, 우리가 사용하려는 콜 스택은 비어있게 됩니다. JavaScript 코드를 실행하는 순간, 전역 실행 컨텍스트가 콜 스택에 담기게 됩니다.
+<div className="mx-auto w-64">![emptyContext](/static/images/first-context.png)</div>
