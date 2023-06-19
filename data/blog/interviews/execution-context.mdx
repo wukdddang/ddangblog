@@ -97,7 +97,7 @@ Outer Environment Reference는 상위 스코프를 가리키는 참조입니다.
 **VE**는 역시 실행 컨텍스트의 한 부분으로, **LE**와 매우 유사하게 작동합니다. 실제로 이 둘은 같은 구조를 가질 수 있습니다. 
 그러나 **VE**는 var를 사용한 변수 선언과 관련된 동작을 처리하는 데 사용됩니다.
 
-**LE**와 **VE**의 차이는 아래와 같습니다.
+추가적으로 **LE**와 **VE**의 차이는 아래와 같습니다.
 - **LE**는 블록 스코핑과 let/const 키워드를 처리하고, **VE**는 var 키워드와 관련된 변수를 처리합니다.
 - **LE**는 런타임에 변경될 수 있지만(ex: 블록 내에서 let으로 선언된 변수), **VE**는 코드 실행 전에 설정되며 런타임에 변경되지 않습니다.
 
@@ -105,7 +105,7 @@ Outer Environment Reference는 상위 스코프를 가리키는 참조입니다.
 
 
 
-그리고 `ECMAScript 공식문서`에서는 **LE**와 **VE**를 항상 **ER**이라고 표현하고 있습니다.
+`ECMAScript 공식문서`에서는 **LE**와 **VE**를 항상 **ER**이라고 표현하고 있습니다. 단어가 혼용되어 헷갈릴 수 있어서 본문에서는 **LE**, **VE** 안에 **ER**이 있는 것으로 통일하여 설명하도록 하겠습니다.
 
 > The LexicalEnvironment and VariableEnvironment components of an execution context are always Environment Records.
 
