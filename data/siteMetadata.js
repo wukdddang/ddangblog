@@ -2,7 +2,7 @@
 
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: '우땅의 Starter Blog',
+  title: 'dddang Blog',
   author: 'Changuk Woo',
   headerTitle: 'Wukddang-Playground',
   description: '공부 내용 저장소와 놀이터입니다.',
