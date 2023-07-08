@@ -28,7 +28,7 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: ['NanumSquareRound', 'Inter', ...fontFamily.sans],
       },
       colors: {
         primary: colors.teal,

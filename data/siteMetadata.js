@@ -11,7 +11,7 @@ const siteMetadata = {
   siteUrl: 'https://dddang.vercel.app',
   siteRepo: 'https://github.com/wukdddang',
   siteLogo: '/static/images/logo.jpeg',
-  image: '/static/images/me.png',
+  image: '/static/images/me-square.png',
   socialBanner: '/static/images/twitter-card.png',
   email: 'dnr8874@gmail.com',
   github: 'https://github.com/wukdddang',
