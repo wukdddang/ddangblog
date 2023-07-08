@@ -1,7 +1,7 @@
 import { useTheme } from 'next-themes'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
-// import Logo from '@/data/logo_white.svg'
+import Logo from '@/data/logo_blue.svg'
 // import LogoLight from '@/data/logo.svg'
 // import LogoDark from '@/data/logo_white.svg'
 import Link from './Link'
@@ -18,7 +18,7 @@ const Header = () => {
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center justify-between">
             <div className="mr-3">
-              {/* <Logo /> */}
+              <Logo />
               {/* {displayDarMode ? <LogoDark /> : <LogoLight />} */}
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
