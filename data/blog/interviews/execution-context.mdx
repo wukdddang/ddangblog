@@ -24,10 +24,57 @@ layout: PostLayout
 - [코어 자바스크립트](http://www.yes24.com/Product/Goods/78586788){' '}
 - [기초부터 완성까지, 프런트엔드](http://www.yes24.com/Product/Goods/105266398)
 
----
+
 **목차**
 
 <TOCInline toc={props.toc} exclude="Overview" toHeading={2} />
+
+
+# 들어가며
+
+## JavaScript의 실행 컨텍스트가 생기게 된 배경
+
+1995년 [Brenden Eich](https://en.wikipedia.org/wiki/Brendan_Eich)가 설계한 JavaScript는 `싱글 스레드` 기반의 언어입니다. 싱글 스레드는 정의 그대로 
+한 번에 하나의 작업만 처리할 수 있어서 동시에 여러 작업들을 처리할 수 없습니다. 그래서 JavaScript는 이러한 싱글 스레드의 단점을 **비동기 프로그래밍** 으로
+보완하고자 했습니다. 아래 코드를 보시죠. 
+
+```js showLineNumbers
+let good = 300;
+console.log('1');
+
+if (true) {
+  let good = 400;
+  setTimeout(() => {
+    console.log(good);
+  }, 1000);
+}
+
+Promise.resolve().then(() => {
+  console.log('3');
+  for (let i = 0; i < 1; i++) {
+    let good = 500;
+    Promise.resolve()
+      .then(() => {
+        console.log('4');
+        setTimeout(() => {
+          console.log(good);
+        }, 0)
+      })
+      .then(() => {
+        console.log('6');
+      });
+  }
+});
+
+console.log('7');
+```
+
+이 코드를 실행하면 어떤 순서로 실행될까요?
+일단 위 코드의 동작 과정을 이해하려면 크게 비동기 작업과, 실행 컨텍스트 두 가지에 대해 잘 알고 있어야 합니다. JavaScript는 이러한 복잡한 비동기 과정을 지원하기 위해서
+`실행 컨텍스트`라는 개념이 존재합니다.
+
+자 지금부터, 위 코드를 이해하기 위한 필요한 개념들을 하나씩 정리하면서,
+위 코드의 결과를 예측해보도록 하겠습니다!
 
 
 ## Lexical Scope (렉시컬 스코프)
@@ -73,7 +120,7 @@ ES6 이후의 JavaScript는 블록 스코프도 Lexical Scope로서 동작할 �
 드디어 실행 컨텍스트에 대한 설명입니다. 생각보다 알고 있어야 하는 지식이 좀 많았습니다만 조금만 더 힘내봅시다!
 실행 컨텍스트에 대해서는 여러 정의가 있습니다만 저만의 언어로 바꾸려고 노력해보았습니다.
 
-> 자바스크립트 코드가 실행될 때 필요한 정보들을 가지고 있는 공간! 
+> 자바스크립트 코드가 실행될 때 필요한 정보들을 가지고 있는 공간
 
 ECMAScript 공식문서에 따르면 실행 컨텍스트의 정의는 다음과 같습니다.
 
@@ -81,7 +128,7 @@ ECMAScript 공식문서에 따르면 실행 컨텍스트의 정의는 다음과 
 
 의역해보자면, 실행 컨텍스트란 `소스코드를 실행하는 데 필요한 환경 정보들을 모아놓은 객체이며, 코드의 실행 결과를 실제로 관리하는 객체`라고 할 수 있습니다. 
 JavaScript는 어떤 실행 컨텍스트가 활성화되는 시점에 선언된 변수를 위로 끌어올리고(호이스팅),
-Outer Environment Reference{' '}를 구성하고, this값을 설정하는 등의 동작을 수행합니다. 함수를 실행하거나, 블록 `{}`을 생성하면 새로운 실행 컨텍스트가 구성됩니다. 실행 컨텍스트는
+Outer Environment Reference{' '}를 구성하고, this값을 설정하는 등의 동작을 수행합니다. 함수를 실행하면 새로운 실행 컨텍스트가 구성됩니다. 실행 컨텍스트는
 
 - `LexicalEnvironment`(이하, **LE**)
 - `VariableEnvironment`(이하, **VE**)
