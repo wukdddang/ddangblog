@@ -67,13 +67,57 @@ layout: PostLayout
 
 ## state... setState... render... 너무 복잡해...
 
-처음으로 component 패턴으로 개발하다 보니, state와 setState, render가 너무 복잡하게 느껴졌습니다. 
+처음 컴포넌트 패턴으로 개발하다 보니, state와 setState, render가 조금 복잡하게 느껴졌습니다. **왜 이런 방식으로 개발을 해야 하지?** 라는 생각이 들어서 매우 의아했습니다. 
+하지만 일단 과제는 해야하니까...🥲 이렇게 개발하는 이유가 있겠지... 라는 막연한 생각으로 과제를 시작했습니다. 시간이 부족할 것 같아서 생각은 잠시 뒤로 미루었습니다. 
+
+다만 팀원분들과 의견을 나누면서, 컴포넌트 패턴 개발은 **컴포넌트의 render()를 직접 호출해서 렌더링 하지 말고, setState에서 컴포넌트의 상태를 변경하고 그 후에 렌더링을 하자** 라는 의의를 가지고 있다는 것을 알게 되었습니다. 그래서 최대한 setState에서 모든 행동들을 처리하려고 했습니다. <br/>
+다만, 현재 작성중인 document를 저장하는 것을 UI로 표현하는 부분에서 문제가 발생했습니다. DocumentPage 컴포넌트에서 onEditing 함수를 구현했는데, 해당 함수에서 querySelector를 이용해서 바로 progressBar의 상태를 변경하도록 하였습니다...
+이 부분은 약간의 변명을 하자면 (😭) 과제 마감일은 다가오고.. 일단 기능만이라도 구현해보자... 라고 생각해서 우당탕탕 만들었는데 확실히 state의 흐름에 지장을 주는 코드였습니다... 최대한 App.js에서 아래로 흐르도록 구현하고 있었는데 여기서 갑자기 흐름이 꼬여버렸습니다.
+리팩토링 기간 중에 onEditing을 수정하면서 해결해야 하는 부분으로 일단 남겨두었습니다...
 
 
+```js
+// DocumentPage 컴포넌트
+this.setState = (nextState) => {
+  this.state = nextState;
+  this.render();
+};
+const $progressBar = document.querySelector('.ProgressBar');
+...
+```
 
 ## onEditing이 너무 복잡한 거 같아요...
 
-... 작성중
+```js
+// DocumentPage 컴포넌트
+onEditing: (id, document) => {
+    if (timer !== null) {
+      clearTimeout(timer);
+    }
+    $progressBar.style.opacity = '1';
+    $progressBar.style.width = '0%';
+
+    timer = setTimeout(async () => {
+      try {
+        const createdDocument = await request(`/documents/${id}`, {
+          method: 'PUT',
+          body: JSON.stringify(document),
+        });
+
+        $progressBar.style.width = '100%';
+
+        textEditor.setState({ status: 'saved', ...createdDocument });
+        updateState({ status: 'saved', ...createdDocument });
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } finally {
+        $progressBar.style.opacity = '0';
+        $progressBar.style.width = '0%';
+      }
+    }, 1000);
+  },
+```
+(함수의 길이가 무려 25줄!)
 
 ## 폴더 구조가 너무 복잡한거 같아요...
 
