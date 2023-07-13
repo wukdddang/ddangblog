@@ -13,3 +13,20 @@ layout: PostLayout
 ![프론트엔드 데브코스 이미지](/static/images/devCourse/frontImage.png)
 
 ## Intersection Observer API
+
+Intersection Observer API는 브라우저의 viewport와 요소의 교차점을 관찰하는 API입니다. 이 API는 요소가 화면에 보이는지 여부를 알 수 있습니다. 이 API는 스크롤 이벤트를 사용하지 않고도 요소의 위치를 관찰할 수 있습니다.
+
+## Intersection Observer API 사용법
+
+Intersection Observer API는 `IntersectionObserver`라는 생성자 함수를 통해 사용할 수 있습니다. `IntersectionObserver` 생성자 함수는 두 개의 인자를 받습니다.
+
+- 첫 번째 인자는 콜백 함수입니다. 콜백 함수는 관찰 대상의 교차점이 변경될 때마다 호출됩니다.
+- 두 번째 인자는 옵션 객체입니다. 옵션 객체는 관찰 대상의 교차점이 변경될 때 어떤 동작을 할지 설정할 수 있습니다.
+
+```js
+const observer = new IntersectionObserver(callback, options);
+```
+
+`IntersectionObserver` 생성자 함수를 통해 생성된 `observer` 객체는 `observe` 메서드를 통해 관찰 대상을 등록할 수 있습니다. `observe` 메서드는 관찰 대상을 등록할 때마다 콜백 함수가 호출됩니다.
+
+```js
